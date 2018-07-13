@@ -20,8 +20,8 @@ if not os.path.exists("./mv_test_%d" % (n)):
     os.mkdir ("./mv_test_%d" % (n) , 0755);
 
 for i in range (0,n):
-    np.savetxt('./mv_test_%d/mat_a_r%d.hex' % (n,i), a_sp[i], delimiter='\n', fmt='%u')
+    np.savetxt('./mv_test_%d/mat_a_r%d.hex' % (n,i), a_sp[i], delimiter='\n', fmt='%x')
 
-np.savetxt('./mv_test_%d/vec_b.hex' % (n), b, delimiter='\n', fmt='%u')
+np.savetxt('./mv_test_%d/vec_b.hex' % (n), b, delimiter='\n', fmt='%x')
 
-np.savetxt('./mv_test_%d/res_c.hex' % (n), c, delimiter='\n', fmt='%u')
+np.savetxt('./mv_test_%d/res_c.hex' % (n), c, delimiter='\n', fmt='%x')

@@ -18,8 +18,8 @@ print("\n ============ \n")
 if not os.path.exists("./vv_test_%d" % (n)):
     os.mkdir ("./vv_test_%d" % (n) , 0755);
 
-np.savetxt('./vv_test_%d/vec_a.hex' % (n), a, delimiter='\n', fmt='%u')
+np.savetxt('./vv_test_%d/vec_a.hex' % (n), a, delimiter='\n', fmt='%x')
 
-np.savetxt('./vv_test_%d/vec_b.hex' % (n), b, delimiter='\n', fmt='%u')
+np.savetxt('./vv_test_%d/vec_b.hex' % (n), b, delimiter='\n', fmt='%x')
 
-np.savetxt('./vv_test_%d/res_c.hex' % (n), c, delimiter='\n', fmt='%u')
+np.savetxt('./vv_test_%d/res_c.hex' % (n), c, delimiter='\n', fmt='%x')

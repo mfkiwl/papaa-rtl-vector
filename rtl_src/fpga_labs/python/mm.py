@@ -17,13 +17,15 @@ print("\n ============ \n")
 print("result")
 print(c)
 print("\n ============ \n")
-os.mkdir ("./mm_test_%d" % (n) , 0755);
+
+if not os.path.exists("./mm_test_%d" % (n)):
+    os.mkdir ("./mm_test_%d" % (n) , 0755);
 
 for i in range (0,n):
-    np.savetxt('./mm_test_%d/mat_a_r%d.hex' % (n,i), a_sp[i], delimiter='\n', fmt='%u')
+    np.savetxt('./mm_test_%d/mat_a_r%d.hex' % (n,i), a_sp[i], delimiter='\n', fmt='%x')
 
 for i in range (0,n):
-    np.savetxt('./mm_test_%d/mat_b_c%d.hex' % (n,i), b_sp[i], delimiter='\n', fmt='%u')
+    np.savetxt('./mm_test_%d/mat_b_c%d.hex' % (n,i), b_sp[i], delimiter='\n', fmt='%x')
 
 for i in range (0,n):
-    np.savetxt('./mm_test_%d/res_c%d.hex' % (n,i), c_sp[i], delimiter='\n', fmt='%u')
+    np.savetxt('./mm_test_%d/res_c%d.hex' % (n,i), c_sp[i], delimiter='\n', fmt='%x')
