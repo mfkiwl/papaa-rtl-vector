@@ -1,15 +1,3 @@
-////////////////////// DESCRIPTION ////////////////////////////
-// This is a verilog testbench to test "vector_mult.v" module
-// which is instantiated inside "lab1_test.v" module.
-//
-// NOTE: The "vector_mult.v" is a combinational design and we
-// are feeding the input to this module sequentially on every
-// clock cycle using the "lab1_test.v" module.
-//
-// Author       : Tushar Garg
-// Organization : University of Waterloo, 20703677
-///////////////////////////////////////////////////////////////
-
 `timescale 1ps/1ps
 `define DATA_WIDTH 4
 `define NUM_ELEMS 4 

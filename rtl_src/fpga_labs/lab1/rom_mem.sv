@@ -1,6 +1,7 @@
-module memory
+module rom_mem
   # (parameter AW = 8,
-               DW = 32)
+               DW = 32,
+               INIT_FILE = "abc.hex")
     (clk,
      wr_data,
      rd_data,
@@ -16,7 +17,7 @@ input [AW-1:0]              rd_addr;
 input                       we;
 
 reg [DW-1:0] mem [2**AW-1:0];
-initial $readmemh("data_file.x", mem);
+initial $readmemh(INIT_FILE, mem);
 
 always@(posedge clk) begin
   if (we) mem[wr_addr] <= wr_data;
