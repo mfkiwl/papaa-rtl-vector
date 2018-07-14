@@ -19,7 +19,7 @@ input [AW-1:0]              wr_addr;
 input [AW-1:0]              rd_addr;
 input                       we;
 integer f;
-localparam FILE_TIMEOUT    = 20*(N+4);
+localparam FILE_TIMEOUT    = 20*(2*N+3);
 
 reg [DW-1:0] mem [2**AW-1:0];
 
@@ -34,7 +34,8 @@ end
 always@(posedge clk) begin
   if (we) begin
     $fwrite (f,"%0h",wr_data);
-	$display ("entered this blk");
+    $fwrite (f,"\n");
+    $display ("time = %0t.. entered this blk", $time);
   end
 end
 
