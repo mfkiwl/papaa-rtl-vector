@@ -24,7 +24,7 @@ localparam [7:0] index = "0"+i;
 rom_mem
            # (  .DW(DW)
                ,.AW($clog2(BRAM_DEPTH))
-               ,.INIT_FILE({"../python/mv_test_10/mat_a_r",index,".hex"}))
+               ,.INIT_FILE({"../python/mv_test/mat_a_r",index,".hex"}))
     rom_inst2 ( .clk     (clk)
                ,.rd_addr (rd_addr)
                ,.wr_addr ()
@@ -38,7 +38,7 @@ endgenerate
 rom_mem
            # (  .DW(DW)
                ,.AW($clog2(BRAM_DEPTH))
-               ,.INIT_FILE("../python/mv_test_10/vec_b.hex"))
+               ,.INIT_FILE("../python/mv_test/vec_b.hex"))
     rom_inst1 ( .clk     (clk)
                ,.rd_addr (rd_addr)
                ,.wr_addr ()
@@ -51,7 +51,7 @@ ram_mem
            # (  .N(N)
                ,.DW(2*DW + $clog2(N))
                ,.AW($clog2(BRAM_DEPTH))
-               ,.INIT_FILE("../python/mv_test_10/sim_res.hex"))
+               ,.INIT_FILE("../python/mv_test/sim_res.hex"))
     ram_inst3 ( .clk     (clk)
                ,.rd_addr ()
                ,.wr_addr (wr_addr)
