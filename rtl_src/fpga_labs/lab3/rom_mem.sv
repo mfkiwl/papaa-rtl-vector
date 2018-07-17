@@ -17,6 +17,7 @@ input [AW-1:0]              rd_addr;
 input                       we;
 
 reg [DW-1:0] mem [2**AW-1:0];
+
 initial $readmemh(INIT_FILE, mem);
 
 always@(posedge clk) begin

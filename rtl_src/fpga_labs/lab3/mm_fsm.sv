@@ -15,6 +15,7 @@ module mm_fsm
 wire mem_rd_en;
 reg [$clog2(N):0] wr_count_reg;
 
+
 //counter
 always@(posedge clk or posedge rst)
 begin

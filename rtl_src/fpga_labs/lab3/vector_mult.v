@@ -9,6 +9,7 @@ module vector_mult
      input [$clog2(N):0] count
      );
 
+
 //MAC
 always@(posedge clk or posedge rst)
 begin

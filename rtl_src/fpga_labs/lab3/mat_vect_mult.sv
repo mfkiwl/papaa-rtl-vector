@@ -16,6 +16,7 @@ wire [(2*DW + $clog2(N))-1:0] mux_op [0:N-2];
 wire sel [0:N-2];
 reg [(2*DW + $clog2(N))-1:0] mux_op_reg [0:N-1];
 
+
 //matrix vector multiplier logic
 generate
 for (i=0; i<N; i=i+1) begin : gen_vv

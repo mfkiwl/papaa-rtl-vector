@@ -4,7 +4,12 @@ module mm_wrapper
                BRAM_DEPTH=32)                               //size of each element
     (input clk,
      input rst,
-     input start
+     input start,
+     input [DW-1:0] rom_data,
+     input [$clog2(BRAM_DEPTH)-1:0] rom_wr_addr,
+     input rom_we,
+     output wire [(2*DW + $clog2(N))-1:0] ram_data [0:N-1],
+     input [$clog2(BRAM_DEPTH)-1:0] ram_rd_addr
      );
 
 wire [DW -1:0] mat_a [0:N-1];
@@ -27,9 +32,9 @@ rom_mem
                ,.INIT_FILE({"../python/mm_test/mat_a_r",index,".hex"}))
     rom_inst1 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr ()
-               ,.we      ()
-               ,.wr_data ()
+               ,.wr_addr (rom_wr_addr)
+               ,.we      (rom_we)
+               ,.wr_data (rom_data)
                ,.rd_data (mat_a[i]));
 
 //matrix "b" memory
@@ -39,9 +44,9 @@ rom_mem
                ,.INIT_FILE({"../python/mm_test/mat_b_c",index,".hex"}))
     rom_inst2 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr ()
-               ,.we      ()
-               ,.wr_data ()
+               ,.wr_addr (rom_wr_addr)
+               ,.we      (rom_we)
+               ,.wr_data (rom_data)
                ,.rd_data (mat_b[i]));
 			   
 //result vector memory
@@ -51,11 +56,11 @@ ram_mem
                ,.AW($clog2(BRAM_DEPTH))
                ,.INIT_FILE({"../python/mm_test/sim_res_c",index,".hex"}))
     ram_inst3 ( .clk     (clk)
-               ,.rd_addr ()
+               ,.rd_addr (ram_rd_addr)
                ,.wr_addr (wr_addr)
                ,.we      (mem_wr_en)
                ,.wr_data (result[i])
-               ,.rd_data ());
+               ,.rd_data (ram_data[i]));
 end
 endgenerate
 

@@ -24,7 +24,6 @@ localparam FILE_TIMEOUT    = 20*(N+4);
 reg [DW-1:0] mem [2**AW-1:0];
 
 initial f = $fopen(INIT_FILE,"w");
-
 always@(posedge clk) begin
   if (we) mem[wr_addr] <= wr_data;
   rd_data <= mem[rd_addr];

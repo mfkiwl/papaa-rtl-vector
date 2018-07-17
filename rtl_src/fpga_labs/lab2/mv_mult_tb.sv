@@ -29,6 +29,11 @@ mv_wrapper #(
          .clk(tb_clk)
         ,.rst(tb_rst)
         ,.start(start)
+        ,.rom_data(0)
+        ,.rom_wr_addr(0)
+        ,.rom_we(0)
+        ,.ram_data()
+        ,.ram_rd_addr(0)
         );
 
 
