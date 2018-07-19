@@ -1,13 +1,16 @@
 module mv_wrapper
-  # (parameter N=10,                                //number of elements in a vector
+  # (parameter N=2,                                //number of elements in a vector
                DW=8,
-               BRAM_DEPTH=16)                               //size of each element
+               BRAM_DEPTH=2)                               //size of each element
     (input clk,
      input rst,
      input start,
-     input [DW-1:0] rom_data,
-     input [$clog2(BRAM_DEPTH)-1:0] rom_wr_addr,
-     input rom_we,
+     input [DW-1:0] rom_mat_data [0:N-1],
+     input [$clog2(BRAM_DEPTH)-1:0] rom_mat_wr_addr [0:N-1],
+     input [0:N-1] rom_mat_we,
+     input [DW-1:0] rom_vec_data,
+     input [$clog2(BRAM_DEPTH)-1:0] rom_vec_wr_addr,
+     input rom_vec_we,
      output wire [(2*DW + $clog2(N))-1:0] ram_data,
      input [$clog2(BRAM_DEPTH)-1:0] ram_rd_addr
      );
@@ -15,8 +18,8 @@ module mv_wrapper
 wire [$clog2(BRAM_DEPTH)-1:0] rd_addr;
 wire [$clog2(BRAM_DEPTH)-1:0] wr_addr;
 wire mem_wr_en;
-wire [$clog2(N):0] count;
-wire [$clog2(N):0] wr_count;
+wire init;
+wire shift_en;
 wire [(2*DW + $clog2(N))-1:0] result;
 wire [DW -1:0] mat_a [0:N-1];
 wire [DW -1:0] vect_b;
@@ -32,9 +35,9 @@ rom_mem
                ,.INIT_FILE({"../python/mv_test/mat_a_r",index,".hex"}))
     rom_inst2 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr (rom_wr_addr)
-               ,.we      (rom_we)
-               ,.wr_data (rom_data)
+               ,.wr_addr (rom_mat_wr_addr[i])
+               ,.we      (rom_mat_we[i])
+               ,.wr_data (rom_mat_data[i])
                ,.rd_data (mat_a[i]));
 end
 endgenerate
@@ -46,9 +49,9 @@ rom_mem
                ,.INIT_FILE("../python/mv_test/vec_b.hex"))
     rom_inst1 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr (rom_wr_addr)
-               ,.we      (rom_we)
-               ,.wr_data (rom_data)
+               ,.wr_addr (rom_vec_wr_addr)
+               ,.we      (rom_vec_we)
+               ,.wr_data (rom_vec_data)
                ,.rd_data (vect_b));
 
 //result vector memory
@@ -71,8 +74,8 @@ mv_inst ( .clk      (clk)
          ,.rst      (rst)
          ,.mat_a    (mat_a)
          ,.vect_b   (vect_b)
-         ,.count    (count)
-         ,.wr_count (wr_count)
+         ,.init     (init)
+         ,.shift_en (shift_en)
          ,.result   (result)
          );
 
@@ -88,7 +91,8 @@ mvfsm_inst ( .clk        (clk)
             ,.wr_addr    (wr_addr)
             ,.wr_count   (wr_count)
             ,.start      (start)
-            ,.count      (count)
+            ,.init       (init)
+            ,.shift_en   (shift_en)
             );
 
 endmodule

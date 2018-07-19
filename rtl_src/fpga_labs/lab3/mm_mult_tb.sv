@@ -29,11 +29,14 @@ mm_wrapper #(
          .clk(tb_clk)
         ,.rst(tb_rst)
         ,.start(start)
-        ,.rom_data(0)
-        ,.rom_wr_addr(0)
-        ,.rom_we(0)
+        ,.rom_mat_a_data('{default:0})
+        ,.rom_mat_b_data('{default:0})
+        ,.rom_mat_a_wr_addr('{default:0})
+        ,.rom_mat_b_wr_addr('{default:0})
+        ,.rom_mat_a_we(0)
+        ,.rom_mat_b_we(0)
         ,.ram_data()
-        ,.ram_rd_addr(0)
+        ,.ram_rd_addr('{default:0})
         );
 
 

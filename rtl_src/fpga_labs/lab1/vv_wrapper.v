@@ -4,10 +4,18 @@ module vv_wrapper
                BRAM_DEPTH=32)                               //size of each element
     (input clk,
      input rst,
-     input start
+     input start,
+	 input [$clog2(BRAM_DEPTH)-1:0] rom_vec_a_wr_addr,
+	 input [$clog2(BRAM_DEPTH)-1:0] rom_vec_b_wr_addr,
+	 input [$clog2(BRAM_DEPTH)-1:0] ram_rd_addr,
+	 input [DW -1:0] rom_vec_a_wr_data,
+	 input [DW -1:0] rom_vec_b_wr_data,
+	 input rom_vec_a_we,
+	 input rom_vec_b_we,
+	 output wire [(2*DW + $clog2(N))-1:0] ram_rd_data
      );
 
-wire [$clog2(N):0] count;
+wire init;
 wire [$clog2(BRAM_DEPTH)-1:0] rd_addr;
 wire [$clog2(BRAM_DEPTH)-1:0] wr_addr;
 wire mem_wr_en;
@@ -22,9 +30,9 @@ rom_mem
                ,.INIT_FILE("../python/vv_test/vec_a.hex"))
     rom_inst1 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr ()
-               ,.we      ()
-               ,.wr_data ()
+               ,.wr_addr (rom_vec_a_wr_addr)
+               ,.we      (rom_vec_a_we)
+               ,.wr_data (rom_vec_a_wr_data)
                ,.rd_data (vect_a));
 
 //vector "b" memory
@@ -34,9 +42,9 @@ rom_mem
                ,.INIT_FILE("../python/vv_test/vec_b.hex"))
     rom_inst2 ( .clk     (clk)
                ,.rd_addr (rd_addr)
-               ,.wr_addr ()
-               ,.we      ()
-               ,.wr_data ()
+               ,.wr_addr (rom_vec_b_wr_addr)
+               ,.we      (rom_vec_b_we)
+               ,.wr_data (rom_vec_b_wr_data)
                ,.rd_data (vect_b));
 
 //result memory
@@ -46,11 +54,11 @@ ram_mem
                ,.AW($clog2(BRAM_DEPTH))
                ,.INIT_FILE("../python/vv_test/sim_res.hex"))
     ram_inst3 ( .clk     (clk)
-               ,.rd_addr ()
+               ,.rd_addr (ram_rd_addr)
                ,.wr_addr (wr_addr)
                ,.we      (mem_wr_en)
                ,.wr_data (result)
-               ,.rd_data ());
+               ,.rd_data (ram_rd_data));
 
 
 //vector multiplier logic
@@ -62,7 +70,7 @@ vv_inst ( .clk      (clk)
          ,.result   (result)
          ,.vect_a   (vect_a)
          ,.vect_b   (vect_b)
-         ,.count    (count)
+         ,.init     (init)
          );
 
 //vector multiplier fsm
@@ -75,7 +83,7 @@ vvfsm_inst ( .clk        (clk)
             ,.rd_addr    (rd_addr)
             ,.mem_wr_en  (mem_wr_en)
             ,.wr_addr    (wr_addr)
-            ,.count      (count)
+            ,.init       (init)
             );
 
 

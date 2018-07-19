@@ -27,6 +27,14 @@ vv_wrapper #(
          .clk(tb_clk)
         ,.rst(tb_rst)
         ,.start(start)
+		,.rom_vec_a_wr_addr(0)
+		,.rom_vec_a_wr_data(0)
+		,.rom_vec_a_we(0)
+		,.rom_vec_b_wr_addr(0)
+		,.rom_vec_b_wr_data(0)
+		,.rom_vec_b_we(0)
+		,.ram_rd_addr(0)
+		,.ram_rd_data()
         );
 
 

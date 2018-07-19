@@ -7,46 +7,44 @@ module vv_fsm
      output reg [$clog2(BRAM_DEPTH)-1:0] rd_addr,
      output reg mem_wr_en,
      output reg [$clog2(BRAM_DEPTH)-1:0] wr_addr,
-     output reg [$clog2(N):0] count
+     output reg init
      );
 
-wire mem_rd_en;
 
-//counter
-always@(posedge clk or posedge rst)
+//init
+always@(posedge clk)
 begin
   if (rst) begin
-    count <= 0;
+    init <= 0;
   end else begin
-    if (count == N)  count <= 0;
-    else if (start) count <= count + 1;
+    if (start && rd_addr == 0) init <= 1;
+	else init <= 0;
   end
 end
 
 //read address
-always@(posedge clk or posedge rst)
+always@(posedge clk)
 begin
   if (rst) begin
     rd_addr   <= 0;
   end else begin
-    if (mem_rd_en) rd_addr   <= rd_addr + 1'b1;
+    if (start && rd_addr < N) rd_addr   <= rd_addr + 1'b1;
+	else if (rd_addr == N) rd_addr <= 0;
   end
 end
 
- assign mem_rd_en = (count == N || !start) ? 1'b0 : 1'b1;
-
 // write enable
-always@(posedge clk or posedge rst) begin
+always@(posedge clk) begin
   if (rst) begin
     mem_wr_en <= 'b0;
   end else begin
-    if (count == N) mem_wr_en <= 'b1;
-    else            mem_wr_en <= 'b0;
+    if (rd_addr == N) mem_wr_en <= 'b1;
+    else              mem_wr_en <= 'b0;
   end
 end
 
 //write address
-always@(posedge clk or posedge rst)
+always@(posedge clk)
 begin
   if (rst) begin
     wr_addr   <= 0;

@@ -9,62 +9,69 @@ module mm_fsm
      output reg [$clog2(BRAM_DEPTH)-1:0] wr_addr,
      output reg [$clog2(N):0] wr_count,
      input start,
-     output reg [$clog2(N):0] count
+     output reg init,
+	 output reg shift_en
      );
 
-wire mem_rd_en;
 reg [$clog2(N):0] wr_count_reg;
 
-
-//counter
-always@(posedge clk or posedge rst)
+//init
+always@(posedge clk)
 begin
   if (rst) begin
-    count <= 0;
+    init <= 0;
   end else begin
-    if (count == N)  count <= 0;
-    else if (start) count <= count + 1;
+    if (start && rd_addr == 0) init <= 1;
+	else init <= 0;
   end
 end
 
-  //read address
-  always@(posedge clk or posedge rst)
-  begin
-    if (rst) begin
-      rd_addr   <= 0;
-    end else begin
-      if (mem_rd_en) rd_addr   <= rd_addr + 1'b1;
-    end
+//read address
+always@(posedge clk)
+begin
+  if (rst) begin
+    rd_addr   <= 0;
+  end else begin
+    if (start && rd_addr < N) rd_addr   <= rd_addr + 1'b1;
+	else if (rd_addr == N) rd_addr <= 0;
   end
-
-  assign mem_rd_en = (count == N || !start) ? 1'b0 : 1'b1;
-
+end
 
   // memory write enable
   assign mem_wr_en = wr_count_reg != 0 ? 1'b1 : 1'b0;
 
   // write counter
-  always@(posedge clk or posedge rst) begin
+  always@(posedge clk) begin
     if (rst) begin
       wr_count <= 'b0;
     end else begin
       if (wr_count == N) wr_count <= 'b0;
-      else if (wr_count == 0 && count != N) wr_count <= 'b0;
+      else if (wr_count == 0 && rd_addr != N) wr_count <= 'b0;
       else            wr_count <= wr_count + 1'b1;
     end
   end
 
   //wr count reg
-  always@(posedge clk or posedge rst) begin
+  always@(posedge clk) begin
     if (rst) begin
       wr_count_reg <= 'b0;
     end else begin
       wr_count_reg <= wr_count;
     end
   end
+  
+  //shift enable
+  always@(posedge clk) begin
+    if (rst) begin
+      shift_en <= 'b0;
+    end else begin
+	  if (wr_count == 1) shift_en <= 'b1;
+	  else if (wr_count == N) shift_en <= 'b0;
+    end
+  end
 
   //write address
-  always@(posedge clk or posedge rst)
+  always@(posedge clk)
   begin
     if (rst) begin
       wr_addr   <= 0;

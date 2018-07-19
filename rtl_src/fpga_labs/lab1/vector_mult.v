@@ -6,17 +6,17 @@ module vector_mult
      output reg [(2*DW + $clog2(N))-1:0] result,
      input [DW -1:0] vect_a,
      input [DW -1:0] vect_b,
-     input [$clog2(N):0] count
+     input init
      );
 
 //MAC
-always@(posedge clk or posedge rst)
+always@(posedge clk)
 begin
   if (rst) begin
     result   <= 0;
   end else begin
-    if (count <= 1) result <= vect_a*vect_b;
-    else            result <= result + vect_a*vect_b;
+    if (init) result <= vect_a*vect_b;
+    else      result <= result + vect_a*vect_b;
   end
 end
 
