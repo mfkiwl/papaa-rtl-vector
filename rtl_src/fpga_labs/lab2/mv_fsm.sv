@@ -1,19 +1,18 @@
 module mv_fsm
   # (parameter N=4,                                //number of elements in a vector
-               DW=2,
-               BRAM_DEPTH=32)                               //size of each element
+               DW=2)
     (input clk,
      input rst,
-     output wire mem_wr_en,
-     output reg [$clog2(BRAM_DEPTH)-1:0] rd_addr,
-     output reg [$clog2(BRAM_DEPTH)-1:0] wr_addr,
-     output reg [$clog2(N):0] wr_count,
+     output logic mem_wr_en,
+     output logic [$clog2(N)-1:0] rd_addr,
+     output logic [$clog2(N)-1:0] wr_addr,
      input start,
-     output reg init,
-	 output reg shift_en
+     output logic init,
+	 output logic shift_en
      );
 
-reg [$clog2(N):0] wr_count_reg;
+logic [$clog2(N):0] wr_count_reg;
+logic [$clog2(N):0] wr_count;
 
 //init
 always@(posedge clk)

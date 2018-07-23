@@ -1,7 +1,7 @@
 `timescale 1ps/1ps
 `define DATA_WIDTH 8
-`define NUM_ELEMS 4
-`define MEM_DEPTH  32
+`define NUM_ELEMS 10
+`define MEM_DEPTH  16
 `define AW $clog2(`MEM_DEPTH)
 
 module vector_mult_tb ();
@@ -22,7 +22,6 @@ always #(TB_CLK_PERIOD/2) tb_clk = ~tb_clk;
 vv_wrapper #(
          .DW(`DATA_WIDTH)
         ,.N(`NUM_ELEMS)
-        ,.BRAM_DEPTH(`MEM_DEPTH)
         ) dut (
          .clk(tb_clk)
         ,.rst(tb_rst)
