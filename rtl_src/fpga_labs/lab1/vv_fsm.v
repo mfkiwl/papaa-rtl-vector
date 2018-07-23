@@ -6,7 +6,6 @@ module vv_fsm
      input start,
      output reg [$clog2(BRAM_DEPTH)-1:0] rd_addr,
      output reg mem_wr_en,
-     output reg [$clog2(BRAM_DEPTH)-1:0] wr_addr,
      output reg init
      );
 
