@@ -1,5 +1,5 @@
 module vv_wrapper
-  # (parameter N=3,                                //number of elements in a vector
+  # (parameter N=4,                                //number of elements in a vector
                DW=8,
                BRAM_DEPTH=32)                               //size of each element
     (input clk,

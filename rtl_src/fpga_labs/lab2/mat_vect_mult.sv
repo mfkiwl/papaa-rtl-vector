@@ -24,8 +24,8 @@ vector_mult
          ,.DW(DW))
 vv_inst ( .clk      (clk)
          ,.rst      (rst)
-         ,.result   (vv_oup[i])
-         ,.vect_a   (mat_a[i])
+         ,.result   (vv_oup[i+1])
+         ,.vect_a   (mat_a[i+1])
          ,.vect_b   (vect_b)
          ,.init     (init)
          );

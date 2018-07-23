@@ -75,7 +75,7 @@ mv_inst ( .clk      (clk)
          ,.mat_a    (mat_a)
          ,.vect_b   (vect_b)
          ,.init     (init)
-         ,.shift_en (shift_en)
+         ,.shift_en (1'b0)
          ,.result   (result)
          );
 

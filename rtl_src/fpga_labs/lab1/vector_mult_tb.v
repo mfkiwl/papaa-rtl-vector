@@ -1,7 +1,7 @@
 `timescale 1ps/1ps
 `define DATA_WIDTH 8
-`define NUM_ELEMS 10
-`define MEM_DEPTH  16
+`define NUM_ELEMS 4
+`define MEM_DEPTH  32
 `define AW $clog2(`MEM_DEPTH)
 
 module vector_mult_tb ();

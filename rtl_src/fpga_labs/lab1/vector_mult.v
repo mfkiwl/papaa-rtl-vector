@@ -10,14 +10,6 @@ module vector_mult
      );
 
 //MAC
-always@(posedge clk)
-begin
-  if (rst) begin
-    result   <= 0;
-  end else begin
-    if (init) result <= vect_a*vect_b;
-    else      result <= result + vect_a*vect_b;
-  end
-end
+// insert code here
 
 endmodule

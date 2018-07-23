@@ -38,7 +38,7 @@ begin
 end
 
   // memory write enable
-  assign mem_wr_en = wr_count_reg != 0 ? 1'b1 : 1'b0;
+  assign mem_wr_en = (wr_count_reg != 0 && wr_count_reg != 4'd1) ? 1'b1 : 1'b0;
 
   // write counter
   always@(posedge clk) begin
