@@ -22,7 +22,6 @@ always #(TB_CLK_PERIOD/2) tb_clk = ~tb_clk;
 vv_wrapper #(
          .DW(`DATA_WIDTH)
         ,.N(`NUM_ELEMS)
-        ,.BRAM_DEPTH(`MEM_DEPTH)
         ) dut (
          .clk(tb_clk)
         ,.rst(tb_rst)

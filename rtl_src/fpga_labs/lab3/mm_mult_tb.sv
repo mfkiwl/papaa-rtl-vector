@@ -14,9 +14,9 @@ localparam TB_CLK_PERIOD = 20;
 initial  #(TB_TIMEOUT) $stop();
 
 // clock
-reg tb_clk = 1'b0;
-reg tb_rst;
-reg start;
+logic tb_clk = 1'b0;
+logic tb_rst;
+logic start;
 
 always #(TB_CLK_PERIOD/2) tb_clk = ~tb_clk;
 
@@ -24,7 +24,6 @@ always #(TB_CLK_PERIOD/2) tb_clk = ~tb_clk;
 mm_wrapper #(
          .DW(`DATA_WIDTH)
         ,.N(`NUM_ELEMS)
-        ,.BRAM_DEPTH(`MEM_DEPTH)
         ) dut (
          .clk(tb_clk)
         ,.rst(tb_rst)

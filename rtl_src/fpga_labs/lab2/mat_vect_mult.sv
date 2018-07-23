@@ -7,14 +7,14 @@ module mat_vect_mult
      input [DW -1:0] vect_b,
      input init,
      input shift_en,
-     output wire [(2*DW + $clog2(N))-1:0] result
+     output logic [(2*DW + $clog2(N))-1:0] result
      );
 
 genvar i,j;
-wire [(2*DW + $clog2(N))-1:0] vv_oup [0:N-1];
-wire [(2*DW + $clog2(N))-1:0] mux_op [0:N-2];
-wire sel;
-reg [(2*DW + $clog2(N))-1:0] mux_op_reg [0:N-1];
+logic [(2*DW + $clog2(N))-1:0] vv_oup [0:N-1];
+logic [(2*DW + $clog2(N))-1:0] mux_op [0:N-2];
+logic sel;
+logic [(2*DW + $clog2(N))-1:0] mux_op_reg [0:N-1];
 
 //matrix vector multiplier logic
 generate
